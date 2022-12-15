@@ -1,0 +1,18 @@
+{% extends "base.html" %} 
+
+{% block content %} 
+<div class="row">
+    <div class="col-sm text-center">
+        <a href="{% url 'calendar' %}?query={{ 'minus' | urlencode}}" class="btn btn-dark" method="GET">Previous Month</a>
+    </div>
+    <div class="col-sm text-center">
+        <a href="{% url 'calendar' %}?query={{ 'current' | urlencode}}" class="btn btn-dark" method="GET">Back to Current Month</a>
+    </div>
+    <div class="col-sm text-center">
+        <a href="{% url 'calendar' %}?query={{ 'plus' | urlencode}}" class="btn btn-dark" method="GET">Next Month</a>
+    </div>
+</div>
+<div>
+    {{ cal| safe }}
+</div>
+{% endblock %} 

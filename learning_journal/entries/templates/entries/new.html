@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+
+{% block title %}New Entry{% endblock %} 
+
+{% block content %} 
+<h1>Add a new entry</h1>
+<p>
+    {{ now }}
+</p>
+<form method="post">
+    <table>
+        {{ form }}
+    </table>
+    {% csrf_token %}
+    <button type="submit">Add Entry</button>
+</form>
+{% endblock %} 

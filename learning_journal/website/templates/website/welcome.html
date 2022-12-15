@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+    <h1>Welcome to my learning journal!</h1>
+    </div>
+    <div class="row">
+    <p>
+        This is the start of this application and will certainly be changed in future.
+    </p>
+    </div>
+    <div class="row">
+    <img src="{% static 'website/example.jpeg' %}" width="50%">
+    </div>
+    <div class="row">
+    <h2>Four Most Recent Entries</h2>
+    </div>
+    <div class="row">
+    <ul>
+        {% for entry in entries %}
+            <li>
+                <a href="{% url 'detail' entry.id %}">
+                    {{entry.title}}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    </div>
+    <div class="row">
+        <div class="col-sm text-center">
+            <a class="btn btn-dark" href="{% url 'new' %}">Add a new entry</a>
+        </div>
+    </div>
+{% endblock %}

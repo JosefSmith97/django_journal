@@ -1,0 +1,59 @@
+body {
+    font-family: sans-serif;
+    color: cornflowerblue;
+    background-color: floralwhite;
+}
+.calendar {
+    width: 98%;
+    margin: auto;
+    font-size: 13px;
+  }
+  
+  .calendar tr, .calendar td {
+    border: 1px solid black;
+  }
+  
+  .calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .calendar td {
+    width: 200px;
+    height: 150px;
+    padding: 20px 0px 0px 5px;
+  }
+  
+  .month {
+    font-size: 25px;
+  }
+  
+  .date {
+    font-size: 16px;
+  }
+  
+  ul {
+    height: 100%;
+    padding: 0px 5px 0px 20px;
+    text-align: center;
+  }
+
+  li {
+    padding: 10%;
+    size: 20px;
+    list-style: none;
+  }
+  
+  a {
+    color: #17a2b8;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pagination {
+    font-size: 2rem;
+  }

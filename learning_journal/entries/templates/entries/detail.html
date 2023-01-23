@@ -12,7 +12,7 @@
     </div>
     <div class="row">
         <p>
-            {{entry.text}}
+            {{entry.text|linebreaks}}
         </p>
     </div>
     <div class="row">
@@ -40,6 +40,7 @@
             <a class="btn btn-dark" href="{% url 'delete' entry.id %}">Delete this entry</a>
         </div>
     </div>
+    <br>
     {% for item, valence in tracks_valences %}
     <div class="row">
         {{ item.name }} by {{ item.artists.0.name}} {% if valence > 0.5 %} (This song is positive) {% else %} (This song is negative) {% endif %}

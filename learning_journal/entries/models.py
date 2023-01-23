@@ -12,7 +12,7 @@ TAG_CHOICES = (
 class Entry(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateTimeField()
-    text = models.CharField(max_length=500, blank=True)
+    text = models.TextField(blank=True)
     tags = models.CharField(max_length=50, choices=TAG_CHOICES, default='Text')
 
     def __str__(self):

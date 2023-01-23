@@ -11,7 +11,7 @@ from django.views.generic import UpdateView
 from pprint import pprint
 
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 
 
 client_id='865dd348f96a475ebf08eb27eb5cbef2'
@@ -34,6 +34,34 @@ def detail(request, id):
     tracks_valences = zip(tracks, valences)
         
     return render(request, "entries/detail.html", {"entry": entry, "ss": ss, "tracks_valences": tracks_valences})
+
+def music_stuff(request):
+    scope = "user-top-read"
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret= client_secret, redirect_uri=redirect_url, scope=scope))
+    short_term_top_tracks = (sp.current_user_top_tracks(limit=10, time_range='short_term'))['items']
+    short_term_track_ids = [track['id'] for track in short_term_top_tracks]
+    short_term_features = sp.audio_features(tracks=short_term_track_ids)
+    short_term_tracks_features = zip(short_term_top_tracks, short_term_features)
+
+    medium_term_top_tracks = sp.current_user_top_tracks(limit=10, time_range='medium_term')
+    long_term_top_tracks = sp.current_user_top_tracks(limit=10, time_range='long_term')
+    short_term_top_artists = sp.current_user_top_artists(limit=10, time_range='short_term')
+    medium_term_top_artists = sp.current_user_top_artists(limit=10, time_range='medium_term')
+    long_term_top_artists = sp.current_user_top_artists(limit=10, time_range='long_term')
+    musical_key_dictionary = {0:"C", 1:"C#",2:"D",3:"D#",4:"E",5:"F",6:"F#",7:"G",8:"G#",9:"A", 10:"A#", 11:"B"}
+    context = {
+        "short_term_tracks_features": short_term_tracks_features,
+        "short_term_tracks": short_term_top_tracks,
+        "medium_term_tracks": medium_term_top_tracks['items'],
+        "long_term_tracks": long_term_top_tracks['items'],
+        "short_term_artists": short_term_top_artists['items'],
+        "medium_term_artists": medium_term_top_artists['items'],
+        "long_term_artists": long_term_top_artists['items'],
+        "short_term_track_keys": musical_key_dictionary,
+
+
+    }
+    return render(request, "entries/music.html", context)
 
 def entries_list(request, page):
     entries = Entry.objects.all().order_by("date")
@@ -89,6 +117,13 @@ def calendar_view(request):
     query = request.GET.get('query')
     initial_year = current_datetime.year
     initial_month = current_datetime.month
+    default_year = request.session.get('year_counter',initial_year)
+    default_month = request.session.get('month_counter', initial_month)
+    if request.session.get('year_counter') is None:
+        request.session['month_counter'] = default_month
+        request.session['year_counter'] = default_year
+
+
     def calendar_update(year, month):
         request.session['month_counter'] = month
         request.session['year_counter'] = year
@@ -130,4 +165,4 @@ def calendar_view(request):
         return redirect('calendar')
     #Standar calendar rendering
     #calendar_update(initial_year, initial_month)
-    return render(request, "entries/calendar.html", {"year":request.session["year_counter"],"cal": calendar_update(request.session['year_counter'], request.session['month_counter'])})
+    return render(request, "entries/calendar.html", {"cal": calendar_update(request.session['year_counter'], request.session['month_counter'])})

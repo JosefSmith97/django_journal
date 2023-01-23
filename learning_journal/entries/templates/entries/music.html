@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container"></div>
+        <h1>Short Term Tracks</h1>
+        {% for item in short_term_tracks %}
+        <div class="row">
+            {{ item.name }} by {{ item.artists.0.name}}
+        </div>
+        {% endfor %}
+        <br>
+        {% for short_term_top_tracks, short_term_features in short_term_tracks_features %}
+        <div class="row">
+           Track name: {{ short_term_top_tracks.name }} by {{short_term_top_tracks.artists.0.name}}<br> 
+           Acousticness Score: {{short_term_features.acousticness}}<br> 
+           Energy Score: {{short_term_features.energy}}<br> 
+           Key (0-11 indicated from C upwards): {{short_term_features.key}}<br> 
+           Tempo in BPM: {{short_term_features.tempo}}<br> 
+           Valence Score: {{short_term_features.valence}}<br> 
+           Instrumentalness Score: {{short_term_features.instrumentalness}}<br> 
+           Liveness Score: {{short_term_features.liveness}}<br> 
+           Time Signature (3-7 indicated 3/4 to 7/4): {{short_term_features.time_signature}}<br> 
+           Speechiness Score: {{short_term_features.speechiness}}<br> 
+           Mode: {%if short_term_features.mode > 0 %} Major {% else %} Minor {% endif %}<br> 
+           Danceability score: {{short_term_features.danceability}}<br> 
+        </div>
+        <br>
+        {% endfor %}
+        <br>
+        <h1>Medium Term Tracks</h1>
+        {% for item in medium_term_tracks %}
+        <div class="row">
+            {{ item.name }} by {{ item.artists.0.name}}
+        </div>
+        {% endfor %}
+        <br>
+        <h1>Long Term Tracks</h1>
+        {% for item in long_term_tracks %}
+        <div class="row">
+            {{ item.name }} by {{ item.artists.0.name}}
+        </div>
+        {% endfor %}
+        <h1>Short Term Artists</h1>
+        {% for item in short_term_artists %}
+        <div class="row">
+            {{ item.name }}
+        </div>
+        {% endfor %}
+        <br>
+        <h1>Medium Term Artists</h1>
+        {% for item in medium_term_artists %}
+        <div class="row">
+            {{ item.name }}
+        </div>
+        {% endfor %}
+        <br>
+        <h1>Long Term Artists</h1>
+        {% for item in long_term_artists %}
+        <div class="row">
+            {{ item.name }}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

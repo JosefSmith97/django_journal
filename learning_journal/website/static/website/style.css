@@ -1,7 +1,10 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Courier New', Courier, monospace !important;
     color: cornflowerblue;
     background-color: floralwhite;
+}
+.display{
+  font-family: 'Courier New', Courier, monospace !important;
 }
 .calendar {
     width: 98%;
@@ -40,8 +43,8 @@ body {
   }
 
   li {
-    padding: 10%;
-    size: 20px;
+    padding: 1rem;
+    size: 2rem;
     list-style: none;
   }
   
@@ -56,4 +59,8 @@ body {
 
   .pagination {
     font-size: 2rem;
+  }
+
+  .lead {
+    font-family: 'Courier New', Courier, monospace, !important;
   }

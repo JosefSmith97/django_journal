@@ -20,6 +20,7 @@ from website.views import welcome, date, about, splash
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include("django.contrib.auth.urls")),
     path('splash', splash, name='splash'),
     path('', welcome, name='welcome'),
     path('date', date),

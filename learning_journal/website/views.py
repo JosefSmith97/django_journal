@@ -10,8 +10,8 @@ def splash(request):
     return render(request, "website/splash.html")
 
 def welcome(request):
-    #the [:4] limits the objects to 4 retrieved
-    entries = Entry.objects.all().order_by('-date')[:4]
+    #the [:5] limits the objects to 5 retrieved
+    entries = Entry.objects.all().order_by('-date')[:5]
     return render(request, "website/welcome.html", {"entries": entries})
 
 def date(request):

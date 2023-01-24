@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.forms import modelform_factory
+from django.db.models import Q
 # Create your views here.
 from .models import Entry
 import datetime
@@ -7,6 +8,7 @@ from .forms import EntryForm
 from .utils import Calendar, sentiment_analysis
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import UpdateView
+from django.db.models import Q
 
 from pprint import pprint
 
@@ -18,8 +20,6 @@ client_id='865dd348f96a475ebf08eb27eb5cbef2'
 client_secret='7fa3127674e04edb815b769d3ce7a211'
 redirect_url='http://127.0.0.1:8080/callback/'
 
-
-current_datetime = datetime.datetime.now()
 
 def detail(request, id):
     entry = get_object_or_404(Entry,pk=id)
@@ -64,20 +64,26 @@ def music_stuff(request):
     return render(request, "entries/music.html", context)
 
 def entries_list(request, page):
-    entries = Entry.objects.all().order_by("date")
+    search = request.GET.get('search')
+    if search:
+        list_entries = Entry.objects.filter(Q(tags=search)|Q(title__icontains=search)|Q(text__icontains=search)).order_by("-date")
+    else:
+        list_entries = Entry.objects.all().order_by("-date")
     page = request.GET.get('page', 1)
-    paginator = Paginator(entries, per_page=3)
+    paginator = Paginator(list_entries, per_page=10)
     try:
-        entries = paginator.page(page)
+        list_entries = paginator.page(page)
     except PageNotAnInteger:
-        entries = paginator.page(1)
+        list_entries = paginator.page(1)
     except EmptyPage:
-        entries = paginator.page(paginator.num_pages)
+        list_entries = paginator.page(paginator.num_pages)
    
    
-    return render(request, "entries/entries_list.html", {"entries": entries})
+    return render(request, "entries/entries_list.html", {"list_entries": list_entries})
 
 def new(request):
+    current_datetime = datetime.datetime.now()
+    query = request.GET.get('date', current_datetime)
     if request.method == "POST":
         # form has been submitted, process data
         form = EntryForm(request.POST)
@@ -85,7 +91,7 @@ def new(request):
             form.save()
             return redirect("welcome")
     else:
-        form = EntryForm(initial={"date": current_datetime})
+        form = EntryForm(initial={"date": query})
     return render(request, "entries/new.html", {"form": form})
 
 # class EditEntryView(UpdateView):
@@ -99,7 +105,7 @@ def edit(request, id):
         form = EntryForm(request.POST, instance=entry)
         if form.is_valid():
             form.save()
-            return redirect("welcome")
+            return redirect("detail", entry.id)
     else:
         form = EntryForm(instance=entry)
     return render(request, "entries/edit.html", {"entry": entry, "form": form})
@@ -114,6 +120,7 @@ def delete(request, id):
 
 
 def calendar_view(request):
+    current_datetime = datetime.datetime.now()
     query = request.GET.get('query')
     initial_year = current_datetime.year
     initial_month = current_datetime.month

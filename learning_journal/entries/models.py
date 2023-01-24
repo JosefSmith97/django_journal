@@ -6,6 +6,7 @@ TAG_CHOICES = (
     ('Text', 'TEXT'),
     ('Code snippet', 'CODE SNIPPET'),
     ('Screenshot', 'SCREENSHOT'),
+    ('Achievement', 'ACHIEVEMENT'),
 )
 
 # Create your models here.

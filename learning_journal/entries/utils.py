@@ -34,7 +34,7 @@ class Calendar(HTMLCalendar):
                 d += f'<li><a style="color: grey !important" href="{reverse("detail", args=(entry.id,))}">{entry.title}</a></li>'
 
         if day != 0:
-            return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+            return f'<td><a class="date" href="{reverse("new")}?date={self.year}-{self.month:02}-{day:02} 15:00:00">{day}</a><ul> {d} </ul></td>'
         return '<td></td>'
 
 	# formats a week as a tr 

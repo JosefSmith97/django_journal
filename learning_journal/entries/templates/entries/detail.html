@@ -1,51 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <h1>{{entry.title}}</h1>
+<div class="container-fluid">
+    <div class="col-7" style="padding: 1rem;">
+        <div class="row">
+            <h1 class="display-4">{{entry.title}}</h1>
+        </div>
+        <div class="row">
+            <p class="lead">
+                This entry was created/ last edited on {{entry.date}}
+            </p>
+        </div>
     </div>
-    <div class="row">
-        <p>
-            This entry was created/ last edited on {{entry.date}}
-        </p>
-    </div>
-    <div class="row">
-        <p>
-            {{entry.text|linebreaks}}
-        </p>
-    </div>
-    <div class="row">
-        <p>
+        <div class="row">
+        <div class="col-7">
+            <p>
+                {{ entry.text|linebreaksbr }}
+            </p>
+        </div>
+        <div class="col-4">
+            <p>
             Tags: {{entry.tags}}
-        </p>
-    </div>
-    </div>
-    <div class="row">
-        <p>
-        {% if ss.compound < -0.2 %}
-            This entry was overly negative, with a compound score of {{ss.compound}}, make sure you're looking after yourself!
-        {% elif ss.compound > 0.2 %}
-            This entry was relatively positive, with a compound score of {{ss.compound}}, well done for making progress!
-        {% else %} 
-            This entry wasn't overly positive with a compound score of {{ss.compound}}, but at least you weren't having a bad day!
-        {% endif %}
-        </p>
-    </div>
-    <div class="row">
-        <div class="col-sm text-center">
-            <a class="btn btn-dark" href="{% url 'edit' entry.pk %}">Edit Entry</a>
-        </div>
-        <div class="col-sm text-center">
-            <a class="btn btn-dark" href="{% url 'delete' entry.id %}">Delete this entry</a>
-        </div>
-    </div>
-    <br>
-    {% for item, valence in tracks_valences %}
+            </p>
+            <div class="row">
+            <p>
+            {% if ss.compound < -0.2 %}
+                This entry was overly negative in tone, with a compound score of {{ss.compound}}, make sure you're looking after yourself! What more could you be doing to stay positive?
+            {% elif ss.compound > 0.2 %}
+                This entry was relatively positive in tone, with a compound score of {{ss.compound}}, well done for keeping your spirits up!
+            {% else %} 
+                This entry wasn't overly positive in tone, with a compound score of {{ss.compound}}, try to be more positive in future if you can!
+            {% endif %}
+            </p>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <a class="btn btn-dark" href="{% url 'edit' entry.pk %}">Edit Entry</a>
+                </div>
+                <div class="col text-center">
+                    <a class="btn btn-dark" href="{% url 'delete' entry.id %}">Delete this entry</a>
+                </div>
+            </div>
+         </div>
+    <!-- Can be reactivated, leaving here to be moved in future -->
+    <!-- {% for item, valence in tracks_valences %}
     <div class="row">
         {{ item.name }} by {{ item.artists.0.name}} {% if valence > 0.5 %} (This song is positive) {% else %} (This song is negative) {% endif %}
     </div>
-    {% endfor %}
-    </div>
+    {% endfor %} -->
 </div>
 {% endblock %}

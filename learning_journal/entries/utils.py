@@ -27,11 +27,11 @@ class Calendar(HTMLCalendar):
             sent = sent['compound']
             print(sent)
             if sent > 0.2:
-                d += f'<li><a style="color: green !important" href="{reverse("detail", args=(entry.id,))}">{entry.title}</a></li>'
+                d += f'<li><a style="color: #6ae54f !important" href="{reverse("detail", args=(entry.id,))}">{entry.title}</a></li>'
             elif sent < -0.2:
                 d += f'<li><a style="color: red !important" href="{reverse("detail", args=(entry.id,))}">{entry.title}</a></li>'
             else:
-                d += f'<li><a style="color: grey !important" href="{reverse("detail", args=(entry.id,))}">{entry.title}</a></li>'
+                d += f'<li><a style="color: white !important" href="{reverse("detail", args=(entry.id,))}">{entry.title}</a></li>'
 
         if day != 0:
             return f'<td><a class="date" href="{reverse("new")}?date={self.year}-{self.month:02}-{day:02} 15:00:00">{day}</a><ul> {d} </ul></td>'

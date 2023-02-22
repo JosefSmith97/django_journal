@@ -3,12 +3,19 @@
 {% block content %} 
 <form method='POST'>
     {% csrf_token %}
-    <h1>
-        Are you sure you want to delete "{{ entry.title }}"?
+    <div class="row">
+    <h1 class="display-4">
+        Are you sure you want to delete<br>
+        "{{ entry.title }}"?
     </h1>
-    <p>
-        <input type='submit' value='Yes'/> <a href="{% url 'welcome' %}">Cancel</a>
-    </p>
+    </div>
+    <div class="row">
+        <div class="col-auto" style="display:block">
+            <button type='submit' name='submit' value='Yes'>Yes</button>
+        </div>
+        <div class="col-auto">
+            <button name='cancel'>Cancel</button>
+        </div>
+    </div>
 </form>
-
 {% endblock %} 

@@ -3,15 +3,20 @@
 {% block title %}New Entry{% endblock %} 
 
 {% block content %} 
+<div class="col-12">
+<div class="row">
 <h1>Add a new entry</h1>
-<p>
-    {{ now }}
-</p>
+</div>
+<div class="row">
 <form method="post">
     <table>
         {{ form }}
     </table>
     {% csrf_token %}
+    <div class="row">
     <button type="submit">Add Entry</button>
+    </div>
 </form>
+</div>
+</div>
 {% endblock %} 

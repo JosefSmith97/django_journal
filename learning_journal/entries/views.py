@@ -38,7 +38,7 @@ def detail(request, id):
 def music_stuff(request):
     scope = "user-top-read"
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret= client_secret, redirect_uri=redirect_url, scope=scope))
-    short_term_top_tracks = (sp.current_user_top_tracks(limit=10, time_range='short_term'))['items']
+    short_term_top_tracks = (sp.current_user_top_tracks(limit=10, offset=1, time_range='short_term'))['items']
     short_term_track_ids = [track['id'] for track in short_term_top_tracks]
     short_term_features = sp.audio_features(tracks=short_term_track_ids)
     short_term_tracks_features = zip(short_term_top_tracks, short_term_features)
@@ -65,12 +65,13 @@ def music_stuff(request):
 
 def entries_list(request, page):
     search = request.GET.get('search')
+    count = Entry.objects.all().count()
     if search:
         list_entries = Entry.objects.filter(Q(tags=search)|Q(title__icontains=search)|Q(text__icontains=search)).order_by("-date")
     else:
         list_entries = Entry.objects.all().order_by("-date")
     page = request.GET.get('page', 1)
-    paginator = Paginator(list_entries, per_page=10)
+    paginator = Paginator(list_entries, per_page=8)
     try:
         list_entries = paginator.page(page)
     except PageNotAnInteger:
@@ -79,11 +80,12 @@ def entries_list(request, page):
         list_entries = paginator.page(paginator.num_pages)
    
    
-    return render(request, "entries/entries_list.html", {"list_entries": list_entries})
+    return render(request, "entries/entries_list.html", {"list_entries": list_entries, "count": count})
 
 def new(request):
     current_datetime = datetime.datetime.now()
     query = request.GET.get('date', current_datetime)
+    current_user = request.user
     if request.method == "POST":
         # form has been submitted, process data
         form = EntryForm(request.POST)
@@ -91,7 +93,8 @@ def new(request):
             form.save()
             return redirect("welcome")
     else:
-        form = EntryForm(initial={"date": query})
+        form = EntryForm(initial={"date": query, "author":current_user})
+        form.author = current_user
     return render(request, "entries/new.html", {"form": form})
 
 # class EditEntryView(UpdateView):
@@ -112,9 +115,12 @@ def edit(request, id):
 
 def delete(request, id):
     entry = Entry.objects.get(pk=id)
-    if request.method == "POST":
-        entry.delete()
-        return redirect("welcome")
+    if request.POST:
+        if request.POST.get("submit") == "Yes":
+            entry.delete()
+            return redirect("welcome")
+        else:
+            return redirect("welcome")
     return render(request, "entries/entry_delete.html", {"entry": entry})
 
 

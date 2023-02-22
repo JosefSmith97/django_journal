@@ -14,7 +14,7 @@
 <body>
     {% block navigation %}
       <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Learning Journal</a>
+        <a class="navbar-brand" href="{% url 'welcome' %}">Learning Journal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,12 +23,9 @@
           <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %} 
             <li class="nav-item">
-              <a class="nav-link" href="#">Welcome, {{user}}!</a>
+              <a class="nav-link" href="{% url 'welcome' %}">Welcome, {{user}}!</a>
             </li>
             {% endif %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'welcome' %}">Home</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
             </li>

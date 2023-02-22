@@ -3,15 +3,20 @@
 {% block title %}Edit Entry{% endblock %} 
 
 {% block content %} 
-<h1>Edit this entry: {{entry.title}}</h1>
-<p>
-    {{ now }}
-</p>
+<div class="col-12">
+<div class="row">
+<h1 class="display-4">Edit this entry: {{entry.title}}</h1>
+</div>
+<div class="row">
 <form method="post">
     <table>
         {{ form }}
     </table>
     {% csrf_token %}
-    <button type="submit">Edit Entry</button>
+    <div class="row">
+        <button type="submit">Edit Entry</button>
+    </div>
 </form>
+</div>
+</div>
 {% endblock %} 

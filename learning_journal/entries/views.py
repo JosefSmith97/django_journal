@@ -11,7 +11,6 @@ from django.views.generic import UpdateView
 from django.db.models import Q
 
 from pprint import pprint
-
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 

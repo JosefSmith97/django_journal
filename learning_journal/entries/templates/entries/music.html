@@ -35,7 +35,7 @@
                 <h1 class="display-4">Medium Term Top Tracks</h1>
                     {% for item in medium_term_tracks %}
                         <div class="row">
-                            {{ item.name }} by {{ item.artists.0.name}}
+                        <p>{{ item.name }} by {{ item.artists.0.name}}</p>
                         </div>
                     {% endfor %}
             </div>
@@ -43,7 +43,7 @@
                 <h1 class="display-4">Long Term Top Tracks</h1>
                     {% for item in long_term_tracks %}
                         <div class="row">
-                            {{ item.name }} by {{ item.artists.0.name}}
+                        <p>{{ item.name }} by {{ item.artists.0.name}}</p>
                         </div>
                     {% endfor %}
             </div>
@@ -53,7 +53,7 @@
                 <h3 class="display-4">Short Term Top Artists</h3>
                     {% for item in short_term_artists %}
                         <div class="row">
-                            {{ item.name }}
+                        <p>{{ item.name }}</p>
                         </div>
                     {% endfor %}
             </div>
@@ -61,7 +61,7 @@
                 <h3 class="display-4">Medium Term Top Artists</h3>
                     {% for item in medium_term_artists %}
                         <div class="row">
-                            {{ item.name }}
+                        <p>{{ item.name }}</p>
                         </div>
                     {% endfor %}
             </div>
@@ -69,7 +69,7 @@
                 <h4 class="display-4">Long Term Top Artists</h4>
                     {% for item in long_term_artists %}
                         <div class="row">
-                            {{ item.name }}
+                            <p>{{ item.name }}</p>
                         </div>
                     {% endfor %}
             </div>

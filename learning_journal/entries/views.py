@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.forms import modelform_factory
 from django.db.models import Q
@@ -14,9 +15,14 @@ from pprint import pprint
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 
+import configparser
+config = configparser.ConfigParser()
 
-client_id='865dd348f96a475ebf08eb27eb5cbef2'
-client_secret='7fa3127674e04edb815b769d3ce7a211'
+cfg_path = os.path.join(os.getcwd(),'config.cfg')
+config.read(cfg_path)
+print(config.sections())
+client_id=config.get('DEFAULT','client_id')
+client_secret=config.get('DEFAULT','client_secret')
 redirect_url='http://127.0.0.1:8080/callback/'
 
 
